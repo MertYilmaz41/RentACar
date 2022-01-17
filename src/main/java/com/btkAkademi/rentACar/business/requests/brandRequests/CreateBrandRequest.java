@@ -13,9 +13,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class CreateBrandRequest {
-	@NotNull // or NotBlank can be
+	@NotNull 
 	@Size(min=3, max=20, message = Messages.invalidBrandName)
 	private String name;
 }

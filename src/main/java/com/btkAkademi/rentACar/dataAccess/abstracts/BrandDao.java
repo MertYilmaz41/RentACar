@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.btkAkademi.rentACar.entities.concretes.Brand;
 
 public interface BrandDao extends JpaRepository<Brand, Integer>{
-	Brand findByName(String name);
+	Brand findByName(String brandName);
 }
