@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="corporatecustomerinvoices")
+@Table(name="corporate_customer_invoices")
 public class CorporateCustomerInvoice {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

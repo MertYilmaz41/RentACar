@@ -1,7 +1,10 @@
 package com.btkAkademi.rentACar.ws.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +30,13 @@ public class IndividualCustomerInvoicesController {
 		this.individualCustomerInvoiceService = individualCustomerInvoiceService;
 	}
 	
+	@GetMapping("getall")
+	public DataResult<List<IndividualCustomerInvoiceDto>> getAll()
+	{
+		return this.individualCustomerInvoiceService.getAll();
+	}
+	
+	
 	@GetMapping("getinvoiceforindividualcustomer/{rentalId}")
 	public DataResult<IndividualCustomerInvoiceDto> getInvoiceForIndividualCustomer(@PathVariable int rentalId) {
 		return this.individualCustomerInvoiceService.getInvoiceForIndividualCustomer(rentalId);
@@ -42,5 +52,10 @@ public class IndividualCustomerInvoicesController {
 	public Result update(@RequestBody @Valid UpdateIndividualCustomerInvoiceRequest updateIndividualCustomerInvoiceRequest) 
 	{
 		return this.individualCustomerInvoiceService.update(updateIndividualCustomerInvoiceRequest);
+	}
+	
+	@DeleteMapping("delete/{id}")
+	public Result delete(@Valid @PathVariable int id) {
+		return this.individualCustomerInvoiceService.delete(id);
 	}
 }

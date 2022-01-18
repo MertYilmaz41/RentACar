@@ -1,6 +1,7 @@
 package com.btkAkademi.rentACar.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,6 +92,17 @@ public class IndividualCustomerInvoiceManager implements IndividualCustomerInvoi
 		return new SuccessDataResult<IndividualCustomerInvoiceDto>(responseCustomerDto);
 		
 	}
+	
+	@Override
+	public DataResult<List<IndividualCustomerInvoiceDto>> getAll() {
+		List<IndividualCustomerInvoice> individualInvoiceList = this.individualCustomerInvoiceDao.findAll();
+		List<IndividualCustomerInvoiceDto> response = individualInvoiceList.
+				stream()
+				.map(individualInvoice -> modelMapperService
+				.forDto().map(individualInvoice, IndividualCustomerInvoiceDto.class))
+				.collect(Collectors.toList());
+		return new SuccessDataResult<List<IndividualCustomerInvoiceDto>>(response);
+	}
 
 	@Override
 	public Result add(CreateIndividualCustomerInvoiceRequest createIndividualCustomerInvoiceRequest) {
@@ -124,6 +136,19 @@ public class IndividualCustomerInvoiceManager implements IndividualCustomerInvoi
 		return new SuccessResult(Messages.individualCustomerInvoiceUpdated);
 	}
 	
+	@Override
+	public Result delete(int id) {
+		if(this.individualCustomerInvoiceDao.existsById(id)) 
+		{
+			this.individualCustomerInvoiceDao.deleteById(id);
+			return new SuccessResult(Messages.individualCustomerInvoiceDeleted);
+		}
+		else 
+		{
+			return new ErrorResult();
+		}
+	}
+	
 	private Result checkIfInvoiceAlreadyExist(int rentalId) 
 	{
 		if(this.individualCustomerInvoiceDao.existsById(rentalId)) 
@@ -141,6 +166,12 @@ public class IndividualCustomerInvoiceManager implements IndividualCustomerInvoi
 		}
 		return new ErrorResult(Messages.individualCustomerInvoiceIdNotExists);
 	}
+
+
+
+
+
+
 
 
 

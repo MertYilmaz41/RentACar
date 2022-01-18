@@ -94,6 +94,16 @@ public class Messages {
 	public static final String promoCodeUpdated="promo.code.updated";
 	public static final String promoCodeAlreadyExists="promo.code.already.exists";
 	public static final String promoCodeNotExists="promo.code.not.exists";
+	public static final String corporateCustomerInvoiceDeleted="corporate.customer.invoice.deleted";
+	public static final String individualCustomerInvoiceDeleted="individual.customer.invoice.deleted";
+	public static final String promoCodeDeleted="promo.code.deleted";
+	public static final String datesAreIncorrect="dates.are.incorrect";
+	public static final String segmentDeleted="segment.deleted";
+	public static final String segmentAdded="segment.added";
+	public static final String segmentUpdated="segment.updated";
+	public static final String segmentNameAlreadyExists="segment.name.already.exists";
+	public static final String segmentIdExists="segment.id.exists";
+	public static final String noAvailableCarInThisSegment="no.avaible.car.in.this.segment";
 	
 	
 	

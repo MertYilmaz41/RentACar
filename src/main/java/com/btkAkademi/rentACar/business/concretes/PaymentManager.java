@@ -12,10 +12,12 @@ import com.btkAkademi.rentACar.business.abstracts.CarService;
 import com.btkAkademi.rentACar.business.abstracts.CustomerCardDetailService;
 import com.btkAkademi.rentACar.business.abstracts.IAdditionalService;
 import com.btkAkademi.rentACar.business.abstracts.PaymentService;
+import com.btkAkademi.rentACar.business.abstracts.PromoCodeService;
 import com.btkAkademi.rentACar.business.abstracts.RentalService;
 import com.btkAkademi.rentACar.business.constants.Messages;
 import com.btkAkademi.rentACar.business.dtos.AdditionalServiceListDto;
 import com.btkAkademi.rentACar.business.dtos.PaymentListDto;
+import com.btkAkademi.rentACar.business.dtos.PromoCodeListDto;
 import com.btkAkademi.rentACar.business.dtos.RentalListDto;
 import com.btkAkademi.rentACar.business.requests.paymentRequests.CreatePaymentRequest;
 import com.btkAkademi.rentACar.business.requests.paymentRequests.UpdatePaymentRequest;
@@ -33,6 +35,7 @@ import com.btkAkademi.rentACar.core.utilities.results.SuccessResult;
 import com.btkAkademi.rentACar.dataAccess.abstracts.PaymentDao;
 import com.btkAkademi.rentACar.entities.concretes.Payment;
 
+
 @Service
 public class PaymentManager implements PaymentService{
 
@@ -42,9 +45,7 @@ public class PaymentManager implements PaymentService{
 	private CarService carService;
 	private IAdditionalService iAdditionalService;
 	private BankAdapterService bankAdapterService;
-	private CustomerCardDetailService customerPaymentDetailService;
-	private CorporateCustomerFindexScoreAdapter corporateCustomerFindexScoreAdapter;
-	private IndividualCustomerFindexScoreAdapterService individualCustomerFindexScoreAdapterService;
+	private PromoCodeService promoCodeService;
 	
 	@Autowired
 	public PaymentManager(
@@ -56,7 +57,8 @@ public class PaymentManager implements PaymentService{
 			BankAdapterService bankAdapterService,
 			CustomerCardDetailService customerPaymentDetailService,
 			CorporateCustomerFindexScoreAdapter corporateCustomerFindexScoreAdapter,
-			IndividualCustomerFindexScoreAdapterService individualCustomerFindexScoreAdapterService
+			IndividualCustomerFindexScoreAdapterService individualCustomerFindexScoreAdapterService,
+			PromoCodeService promoCodeService
 			) 
 	{
 		super();
@@ -66,9 +68,7 @@ public class PaymentManager implements PaymentService{
 		this.carService = carService;
 		this.iAdditionalService = iAdditionalService;
 		this.bankAdapterService = bankAdapterService;
-		this.customerPaymentDetailService = customerPaymentDetailService;
-		this.corporateCustomerFindexScoreAdapter = corporateCustomerFindexScoreAdapter;
-		this.individualCustomerFindexScoreAdapterService = individualCustomerFindexScoreAdapterService;
+		this.promoCodeService = promoCodeService;
 	}
 
 	@Override
@@ -188,6 +188,17 @@ public class PaymentManager implements PaymentService{
 		if(days==0) days=1;
 		
 		totalPrice+=days* carService.getByCarId(rentalListDto.getCarId()).getData().getDailyPrice();
+		
+		if(rentalListDto.getPromoCodeId() !=0) 
+		{
+			PromoCodeListDto promoCode = this.promoCodeService.getById(rentalListDto.getPromoCodeId()).getData();
+			if(!promoCode.getCodeEndDate().isAfter(rentalListDto.getReturnDate())) 
+			{
+				double discountRate = 0;
+				discountRate = promoCode.getDiscountRate();
+				totalPrice = totalPrice - (totalPrice * discountRate);
+			}
+		}
 		
 		List<AdditionalServiceListDto> services = iAdditionalService.getAllByRentalId(rentalListDto.getId()).getData();
 		

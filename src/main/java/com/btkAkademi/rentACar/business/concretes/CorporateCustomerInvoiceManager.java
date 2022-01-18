@@ -1,6 +1,7 @@
 package com.btkAkademi.rentACar.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,6 +97,17 @@ public class CorporateCustomerInvoiceManager implements CorporateCustomerInvoice
 	
 
 	@Override
+	public DataResult<List<CorporateCustomerInvoiceDto>> getAll() {
+		List<CorporateCustomerInvoice> corporateInvoiceList = this.corporateCustomerInvoiceDao.findAll();
+		List<CorporateCustomerInvoiceDto> response = corporateInvoiceList.
+				stream()
+				.map(corporateInvoice -> modelMapperService
+				.forDto().map(corporateInvoice, CorporateCustomerInvoiceDto.class))
+				.collect(Collectors.toList());
+		return new SuccessDataResult<List<CorporateCustomerInvoiceDto>>(response);
+	}
+	
+	@Override
 	public Result add(CreateCorporateCustomerInvoiceRequest createCorporateCustomerInvoiceRequest) {
 		Result result = BusinessRules.run
 				(
@@ -133,6 +145,21 @@ public class CorporateCustomerInvoiceManager implements CorporateCustomerInvoice
 		return new SuccessResult(Messages.corporateCustomerInvoiceUpdated);
 	}
 	
+	@Override
+	public Result delete(int id) {
+	
+		if(this.corporateCustomerInvoiceDao.existsById(id)) 
+		{
+			this.corporateCustomerInvoiceDao.deleteById(id);
+			return new SuccessResult(Messages.corporateCustomerInvoiceDeleted);
+		}
+		else 
+		{
+			return new ErrorResult();
+		}
+
+	}
+	
 	private Result checkIfInvoiceAlreadyExist(int rentalId) 
 	{
 		if(this.corporateCustomerInvoiceDao.existsById(rentalId)) 
@@ -150,6 +177,12 @@ public class CorporateCustomerInvoiceManager implements CorporateCustomerInvoice
 		}
 		return new ErrorResult(Messages.corporateCustomerInvoiceIdNotExists);
 	}
+
+
+
+
+
+
 
 
 

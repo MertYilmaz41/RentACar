@@ -18,6 +18,7 @@ import com.btkAkademi.rentACar.business.abstracts.IndividualCustomerService;
 import com.btkAkademi.rentACar.business.abstracts.PaymentService;
 import com.btkAkademi.rentACar.business.abstracts.RentalService;
 import com.btkAkademi.rentACar.business.constants.Messages;
+import com.btkAkademi.rentACar.business.dtos.CarListDto;
 import com.btkAkademi.rentACar.business.dtos.RentalListDto;
 import com.btkAkademi.rentACar.business.requests.rentalRequests.CreateRentalRequestForCorporate;
 import com.btkAkademi.rentACar.business.requests.rentalRequests.CreateRentalRequestForIndividual;
@@ -91,6 +92,23 @@ public class RentalManager implements RentalService{
 
 	@Override
 	public Result add(CreateRentalRequestForIndividual createRentalForIndividualRequest) {
+		
+		if (!checkIfCarInMaintanance(createRentalForIndividualRequest.getCarId()).isSuccess() 
+				|| !checkIfRentalIdExist(createRentalForIndividualRequest.getCarId()).isSuccess()) 
+		{
+			CarListDto car = findAvailableCar(carService.getByCarId(createRentalForIndividualRequest.getCarId()).getData().getSegmentId()).getData();
+			
+			if(car!=null) 
+			{
+				createRentalForIndividualRequest.setCarId(car.getId());
+			}
+			else 
+			return new ErrorResult(Messages.noAvailableCarInThisSegment);
+		}
+		
+		
+		
+		
 		Result result = BusinessRules.run(
 				checkIfCustomerExist(createRentalForIndividualRequest.getIndividualCustomerId()),
 				checkIfCarInMaintanance(createRentalForIndividualRequest.getCarId()),
@@ -241,6 +259,13 @@ public class RentalManager implements RentalService{
 		}
 		return new SuccessResult();
 		
+	}
+	
+	private DataResult<CarListDto> findAvailableCar(int SegmentId) {
+		if(carService.findAvailableCarsBySegmentId(SegmentId).isSuccess()) {
+			CarListDto car = carService.getByCarId(carService.findAvailableCarsBySegmentId(SegmentId).getData().get(0)).getData();
+			return new SuccessDataResult<CarListDto>(car);
+		}else return new ErrorDataResult<CarListDto>();
 	}
 
 }

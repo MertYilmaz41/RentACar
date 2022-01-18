@@ -122,6 +122,14 @@ public class CarManager implements CarService{
 	}
 
 
+	@Override
+	public DataResult<List<Integer>> findAvailableCarsBySegmentId(int segmentId) {
+		if(carDao.findAvailableCarBySegment(segmentId).size()<1) {
+			return new ErrorDataResult<List<Integer>>();
+		}else return new SuccessDataResult<List<Integer>>(carDao.findAvailableCarBySegment(segmentId));
+	}
+
+
 
 	
 	//private Result checkIfCarExist(int id) 

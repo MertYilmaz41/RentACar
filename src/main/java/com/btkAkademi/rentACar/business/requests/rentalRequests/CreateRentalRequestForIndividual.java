@@ -18,6 +18,7 @@ public class CreateRentalRequestForIndividual {
 	private int pickUpCityId;
 	private int returnCityId;
 	
+	private int segmentName;
 	private String tcNo;
 	private int individualCustomerId;	
 	private int carId;

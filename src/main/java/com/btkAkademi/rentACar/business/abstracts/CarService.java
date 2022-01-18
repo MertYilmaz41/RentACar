@@ -15,4 +15,5 @@ public interface CarService {
 	Result update(UpdateCarRequest updateCarRequest);
 	Result delete(int id);
 	DataResult<CarListDto> getByCarId(int carId);
+	DataResult<List<Integer>> findAvailableCarsBySegmentId(int segmentId);
 }
