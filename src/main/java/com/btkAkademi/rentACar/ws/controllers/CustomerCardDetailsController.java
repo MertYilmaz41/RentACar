@@ -3,6 +3,7 @@ package com.btkAkademi.rentACar.ws.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.btkAkademi.rentACar.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/customercardetails")
+@CrossOrigin
 public class CustomerCardDetailsController {
 	private CustomerCardDetailService customerCardDetailService;
 	

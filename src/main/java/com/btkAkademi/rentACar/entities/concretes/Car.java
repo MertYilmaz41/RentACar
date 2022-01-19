@@ -37,7 +37,7 @@ public class Car {
 	@Column(name="kilometer")
 	private int kilometer;
 	@Column(name="min_age")
-	private int minAge;
+	private Integer minAge;
 	
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
