@@ -116,6 +116,7 @@ public class RentalManager implements RentalService{
 					individualCustomerService.getByIndividualCustomerId(createRentalForIndividualRequest.getIndividualCustomerId()).getData().getTcNo(),
 					carService.getByCarId(createRentalForIndividualRequest.getCarId()).getData().getFindexScore())	,
 				checkIfCustomerAgeIsEnough(createRentalForIndividualRequest.getIndividualCustomerId(), createRentalForIndividualRequest.getCarId())
+				//checkIfCarIdExists(createRentalForIndividualRequest.getCarId())
 		
 			
 				);
@@ -133,11 +134,12 @@ public class RentalManager implements RentalService{
 	@Override
 	public Result add(CreateRentalRequestForCorporate createRentalRequestForCorporate) {
 		Result result = BusinessRules.run(
-				checkIfCustomerExist(createRentalRequestForCorporate.getCustomerId()),
+				checkIfCustomerExist(createRentalRequestForCorporate.getCorporateCustomerId()),
 				checkIfCarInMaintanance(createRentalRequestForCorporate.getCarId()),				
 				checkIfCorporateCustomerHasEnoughCreditScore(
-					corporateCustomerService.getByCorporateCustomerId(createRentalRequestForCorporate.getCustomerId()).getData().getTaxNumber(),
-					carService.getByCarId(createRentalRequestForCorporate.getCarId()).getData().getFindexScore())	
+					corporateCustomerService.getByCorporateCustomerId(createRentalRequestForCorporate.getCorporateCustomerId()).getData().getTaxNumber(),
+					carService.getByCarId(createRentalRequestForCorporate.getCarId()).getData().getFindexScore()),
+				checkIfCarIdExists(createRentalRequestForCorporate.getCarId())
 			
 				);
 
@@ -268,4 +270,14 @@ public class RentalManager implements RentalService{
 		}else return new ErrorDataResult<CarListDto>();
 	}
 
+	private Result checkIfCarIdExists(int carId) 
+	{
+		
+		if(this.carService.getByCarId(carId)!=null) 
+		{
+			return new ErrorResult(Messages.carIsInRental);
+		}
+		
+		return new SuccessResult();
+	}
 }

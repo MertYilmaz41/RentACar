@@ -18,6 +18,7 @@ public class CreateCarRequest {
 	private String description;
 	private int findexScore;
 	private int minAge;
+	private Integer segmentId;
 
 	
 

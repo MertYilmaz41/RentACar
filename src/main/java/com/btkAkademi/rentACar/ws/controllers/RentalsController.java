@@ -39,7 +39,7 @@ public class RentalsController {
 		return this.rentalService.getAll(pageNo, pageSize);
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return rentalService.getRentalById(id);	

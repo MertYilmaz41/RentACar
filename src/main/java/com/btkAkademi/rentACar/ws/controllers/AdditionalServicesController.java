@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.btkAkademi.rentACar.business.abstracts.IAdditionalService;
 import com.btkAkademi.rentACar.business.dtos.AdditionalServiceListDto;
 import com.btkAkademi.rentACar.business.requests.additionalServiceRequests.CreateAdditionalServiceRequest;
+import com.btkAkademi.rentACar.business.requests.additionalServiceRequests.UpdateAdditionalServiceRequest;
 import com.btkAkademi.rentACar.core.utilities.results.DataResult;
 import com.btkAkademi.rentACar.core.utilities.results.Result;
 
@@ -30,11 +31,18 @@ public class AdditionalServicesController {
 		this.iAdditionalService = iAdditionalService;
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return iAdditionalService.getByAdditionalServiceId(id);	
 	}
+	
+	@GetMapping("getallbyrentalid/{id} ")
+	public DataResult<List<AdditionalServiceListDto>> getAllByRentalId(@PathVariable int id)
+	{
+		return this.iAdditionalService.getAllByRentalId(id);
+	}
+	
 	
 	@GetMapping("getall")
 	public DataResult<List<AdditionalServiceListDto>> getAll()
@@ -54,4 +62,11 @@ public class AdditionalServicesController {
 		return this.iAdditionalService.delete(id);
 	}
 	
+	@PostMapping("update")
+	public Result update(@RequestBody @Valid UpdateAdditionalServiceRequest updateAdditionalServiceRequest) 
+	{
+		return this.iAdditionalService.update(updateAdditionalServiceRequest);
+	}
+	
+
 }

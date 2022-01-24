@@ -106,7 +106,7 @@ public class PromoCodeManager implements PromoCodeService{
 	
 	private Result promoCodeAlreadyExits(String promoCode) 
 	{
-		if(this.promoCodeDao.findByCode(promoCode).getCode()!=null) 
+		if(this.promoCodeDao.findByCode(promoCode)!=null) 
 		{
 			return new ErrorResult(Messages.promoCodeAlreadyExists);
 		}
@@ -125,10 +125,10 @@ public class PromoCodeManager implements PromoCodeService{
 	private Result checkIfDatesAreCorrect(LocalDate startDate, LocalDate endDate) {
 		if (startDate.isBefore(endDate)) 
 		{
-			return new ErrorResult(Messages.datesAreIncorrect);
+			return new SuccessResult(Messages.datesAreIncorrect);
 		} 
 		else
-			return new SuccessResult();
+			return new ErrorResult();
 	}
 
 

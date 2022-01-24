@@ -37,7 +37,7 @@ public class ColorsController {
 		return this.colorService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return colorService.getByColorId(id);	

@@ -36,7 +36,7 @@ public class PaymentsController {
 		return this.paymentService.getAll();
 	}
 
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return paymentService.getByPaymentId(id);	

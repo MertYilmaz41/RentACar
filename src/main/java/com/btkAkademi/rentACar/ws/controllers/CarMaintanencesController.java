@@ -39,7 +39,7 @@ public class CarMaintanencesController {
 		return this.carMaintanenceService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return carMaintanenceService.getByCarMaintanenceId(id);	

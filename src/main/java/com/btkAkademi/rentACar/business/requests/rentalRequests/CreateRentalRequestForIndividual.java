@@ -14,14 +14,9 @@ import lombok.NoArgsConstructor;
 public class CreateRentalRequestForIndividual {
 
 	private LocalDate rentDate;
-	private int rentedKilometer;
-	private int pickUpCityId;
-	private int returnCityId;
-	
-	private int segmentName;
-	private String tcNo;
 	private int individualCustomerId;	
 	private int carId;
+	private int promoCode;
 
 
 }

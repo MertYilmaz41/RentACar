@@ -38,7 +38,7 @@ public class PromoCodesController {
 		return this.promoCodeService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return promoCodeService.getById(id);	

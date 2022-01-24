@@ -11,12 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateRentalRequestForCorporate {
 	private LocalDate rentDate;
-	private int rentedKilometer;
-	private int pickUpCityId;
-	private int returnCityId;
-	
-	
-	private String taxNumber;
-	private int customerId;	
+	private int corporateCustomerId;	
 	private int carId;
+	private int promoCode;
 }

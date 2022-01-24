@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.btkAkademi.rentACar.business.abstracts.CarService;
+import com.btkAkademi.rentACar.business.abstracts.RentalService;
+import com.btkAkademi.rentACar.business.abstracts.SegmentService;
 import com.btkAkademi.rentACar.business.constants.Messages;
 import com.btkAkademi.rentACar.business.dtos.CarListDto;
 import com.btkAkademi.rentACar.business.requests.carRequests.CreateCarRequest;
@@ -29,12 +32,19 @@ public class CarManager implements CarService{
 
 	private CarDao carDao;
 	private ModelMapperService modelMapperService;
+	private SegmentService segmentService;
+	private RentalService rentalService;
 	
 	
 	@Autowired
-	public CarManager(CarDao carDao, ModelMapperService modelMapperService) {
+	public CarManager(CarDao carDao, 
+			ModelMapperService modelMapperService, 
+			SegmentService segmentService, 
+			@Lazy RentalService rentalService) {
 		this.carDao = carDao;
 		this.modelMapperService = modelMapperService;
+		this.segmentService = segmentService;
+		this.rentalService = rentalService;
 	}
 
 
@@ -53,7 +63,10 @@ public class CarManager implements CarService{
 	@Override
 	public Result add(CreateCarRequest createCarRequest) {
 		
-		Result result = BusinessRules.run();
+		Result result = BusinessRules.run(
+				checkIfSegmentIdExists(createCarRequest.getSegmentId())
+			
+				);
 		
 		if(result!=null) 
 		{
@@ -90,6 +103,20 @@ public class CarManager implements CarService{
 	
 	@Override
 	public Result delete(int id) {
+		
+		
+		Result result = BusinessRules.run(
+				checkIfCarIsInRental(id)
+				
+				);
+		
+		
+		if(result!=null) 
+		{
+			return result;
+		}
+		
+		
 		if(this.carDao.existsById(id)) 
 		{
 			this.carDao.deleteById(id);
@@ -99,7 +126,10 @@ public class CarManager implements CarService{
 		{
 			return new ErrorResult();
 		}
+		
+		
 	}
+	
 
 	@Override
 	public DataResult<CarListDto> getByCarId(int carId) {
@@ -114,11 +144,12 @@ public class CarManager implements CarService{
 	
 	private Result checkIfCarIdExist(int id) 
 	{
-		if(!this.carDao.existsById(id))
+		if(this.carDao.existsById(id))
 		{
-			return new ErrorResult(Messages.carIdNotExists);
+			return new SuccessResult();	
 		}
-		return new SuccessResult();
+		
+		return new ErrorResult(Messages.carIdNotExists);
 	}
 
 
@@ -128,8 +159,26 @@ public class CarManager implements CarService{
 			return new ErrorDataResult<List<Integer>>();
 		}else return new SuccessDataResult<List<Integer>>(carDao.findAvailableCarBySegment(segmentId));
 	}
+	
+	private Result checkIfSegmentIdExists(int id) 
+	{	
+		if(segmentService.getBySegmentId(id)!=null) 
+		{
+			return new SuccessResult();
+		}
+		return new ErrorResult(Messages.segmentIdNotExists);
+	}
 
-
+	
+	private Result checkIfCarIsInRental(int carId) 
+	{
+		if(this.rentalService.getRentalById(carId)!=null)
+		{
+			return new ErrorResult(Messages.carIsInRental);
+		}
+		return new SuccessResult();
+		
+	}
 
 	
 	//private Result checkIfCarExist(int id) 

@@ -113,9 +113,9 @@ public class SegmentManager implements SegmentService{
 	{
 		if(this.segmentDao.existsById(id)) 
 		{
-			return new ErrorResult(Messages.segmentIdExists);
+			return new SuccessResult(Messages.segmentUpdated);
 		}
-		return new SuccessResult();
+		return new ErrorResult();
 	}
 
 }

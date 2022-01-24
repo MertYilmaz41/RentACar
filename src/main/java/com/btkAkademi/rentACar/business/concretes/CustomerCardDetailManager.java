@@ -11,6 +11,7 @@ import com.btkAkademi.rentACar.business.constants.Messages;
 import com.btkAkademi.rentACar.business.dtos.CustomerCardDetailListDto;
 import com.btkAkademi.rentACar.business.requests.customerCardDetailRequests.CreateCustomerCardDetailRequest;
 import com.btkAkademi.rentACar.business.requests.customerCardDetailRequests.UpdateCustomerCardDetailsRequest;
+import com.btkAkademi.rentACar.core.utilities.business.BusinessRules;
 import com.btkAkademi.rentACar.core.utilities.mapping.ModelMapperService;
 import com.btkAkademi.rentACar.core.utilities.results.DataResult;
 import com.btkAkademi.rentACar.core.utilities.results.ErrorDataResult;
@@ -34,6 +35,34 @@ public class CustomerCardDetailManager implements CustomerCardDetailService{
 		this.modelMapperService = modelMapperService;
 	}
 
+	@Override
+	public DataResult<List<CustomerCardDetailListDto>> getAll() {
+		List<CustomerCardDetail> customerCardList = this.customerCardDetailDao.findAll();
+		List<CustomerCardDetailListDto> response = customerCardList.stream()
+				.map(customerCardDetail -> modelMapperService.forDto()
+				.map(customerCardDetail, CustomerCardDetailListDto.class))
+				.collect(Collectors.toList());
+		return new SuccessDataResult<List<CustomerCardDetailListDto>>(response);
+	}
+	
+	@Override
+	public Result add(CreateCustomerCardDetailRequest createCustomerPaymentDetailRequest) 
+	{
+		Result result =  BusinessRules.run();
+		
+		if(result!=null) 
+		{
+			return result;
+		}
+		
+		
+		CustomerCardDetail customerPaymentDetail = this.modelMapperService.forRequest()
+		.map(createCustomerPaymentDetailRequest, CustomerCardDetail.class);
+		
+		this.customerCardDetailDao.save(customerPaymentDetail);
+		return new SuccessResult(Messages.customerPaymentDetailAdded);
+	}
+	
 	@Override
 	public DataResult<List<CustomerCardDetailListDto>> getCustomerPaymentDetailsByCustomerId(int customerId) 
 	{
@@ -60,15 +89,7 @@ public class CustomerCardDetailManager implements CustomerCardDetailService{
 		return new ErrorDataResult<CustomerCardDetailListDto>();
 	}
 
-	@Override
-	public Result add(CreateCustomerCardDetailRequest createCustomerPaymentDetailRequest) 
-	{
-		CustomerCardDetail customerPaymentDetail = this.modelMapperService.forRequest()
-		.map(createCustomerPaymentDetailRequest, CustomerCardDetail.class);
-		
-		this.customerCardDetailDao.save(customerPaymentDetail);
-		return new SuccessResult(Messages.customerPaymentDetailAdded);
-	}
+
 
 	@Override
 	public Result update(UpdateCustomerCardDetailsRequest updateCustomerPamentDetails) {
@@ -87,5 +108,7 @@ public class CustomerCardDetailManager implements CustomerCardDetailService{
 		}
 			return new ErrorResult();
 	}
+
+
 
 }

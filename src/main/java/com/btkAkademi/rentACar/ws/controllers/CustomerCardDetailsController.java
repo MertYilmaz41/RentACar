@@ -1,5 +1,7 @@
 package com.btkAkademi.rentACar.ws.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.btkAkademi.rentACar.business.abstracts.CustomerCardDetailService;
+import com.btkAkademi.rentACar.business.dtos.CustomerCardDetailListDto;
 import com.btkAkademi.rentACar.business.requests.customerCardDetailRequests.CreateCustomerCardDetailRequest;
 import com.btkAkademi.rentACar.business.requests.customerCardDetailRequests.UpdateCustomerCardDetailsRequest;
+import com.btkAkademi.rentACar.core.utilities.results.DataResult;
 import com.btkAkademi.rentACar.core.utilities.results.Result;
 
 @RestController
@@ -29,20 +33,29 @@ public class CustomerCardDetailsController {
 		this.customerCardDetailService = customerCardDetailService;
 	}
 	
+	@GetMapping("getall")
+	public DataResult<List<CustomerCardDetailListDto>> getAll()
+	{
+		return this.customerCardDetailService.getAll();
+	}
+	
 	@GetMapping ("getCustomerPaymentDetailsByCustomerId/{id}")
-	public Result getCustomerPaymentDetailsByCustomerId(@PathVariable int id) {
+	public Result getCustomerPaymentDetailsByCustomerId(@PathVariable int id) 
+	{
 
 		return this.customerCardDetailService.getCustomerPaymentDetailsByCustomerId(id);
 	}
 	
-	@GetMapping ("getById/{id}")
-	public Result getById(@PathVariable int id) {
+	@GetMapping ("getbyid/{id}")
+	public Result getById(@PathVariable int id)
+	{
 
 		return this.customerCardDetailService.getById(id);
 	}
 	
 	@PostMapping("add")
-	public Result add(@RequestBody @Valid CreateCustomerCardDetailRequest createCustomerPaymentDetailRequest) {
+	public Result add(@RequestBody @Valid CreateCustomerCardDetailRequest createCustomerPaymentDetailRequest) 
+	{
 
 		return this.customerCardDetailService.add(createCustomerPaymentDetailRequest);
 	}
@@ -55,7 +68,8 @@ public class CustomerCardDetailsController {
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public Result delete(@PathVariable int id) {
+	public Result delete(@PathVariable int id) 
+	{
 
 		return this.customerCardDetailService.delete(id);
 	}

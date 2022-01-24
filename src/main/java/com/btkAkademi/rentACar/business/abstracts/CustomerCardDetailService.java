@@ -11,6 +11,7 @@ import com.btkAkademi.rentACar.core.utilities.results.Result;
 public interface CustomerCardDetailService {
 	DataResult<List<CustomerCardDetailListDto>> getCustomerPaymentDetailsByCustomerId(int customerId);
 	DataResult<CustomerCardDetailListDto> getById(int id);
+	DataResult<List<CustomerCardDetailListDto>> getAll();
 	
 	Result add(CreateCustomerCardDetailRequest createCustomerPaymentDetailRequest);
 	Result update(UpdateCustomerCardDetailsRequest updateCustomerPamentDetails);

@@ -104,6 +104,10 @@ public class Messages {
 	public static final String segmentNameAlreadyExists="segment.name.already.exists";
 	public static final String segmentIdExists="segment.id.exists";
 	public static final String noAvailableCarInThisSegment="no.avaible.car.in.this.segment";
+	public static final String segmentIdNotExists="segment.id.not.exists";
+	public static final String carIsInRental = "car.is.in.rental";
+	public static final String carIsNotExists="car.is.not.exists";
+	
 	
 	
 	

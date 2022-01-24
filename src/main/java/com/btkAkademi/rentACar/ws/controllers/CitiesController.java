@@ -31,13 +31,13 @@ public class CitiesController {
 		this.cityService = cityService;
 	}
 	
-	@GetMapping("getAll")
+	@GetMapping("getall")
 	public DataResult<List<CityListDto>> getAll()
 	{
 		return this.cityService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return cityService.getByCityId(id);	

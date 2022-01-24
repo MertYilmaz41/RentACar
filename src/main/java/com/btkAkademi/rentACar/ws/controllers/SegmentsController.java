@@ -38,7 +38,7 @@ public class SegmentsController {
 		return this.segmentService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return segmentService.getBySegmentId(id);	

@@ -36,7 +36,7 @@ public class CorporateCustomersController {
 		return this.corporateCustomerService.getAll();
 	}
 	
-	@GetMapping("getById/{id}")
+	@GetMapping("getbyid/{id}")
 	public Result getById(@PathVariable int id) 
 	{
 		return corporateCustomerService.getByCorporateCustomerId(id);	

@@ -59,7 +59,7 @@ public class CarMaintanenceManager implements CarMaintanenceService{
 	public Result add(CreateCarMaintenanceRequest createCarMaintananceRequest) {
 		Result result = BusinessRules.run(				
 				checkIfCarIsExists(createCarMaintananceRequest.getCarId()),
-				checkIfCarIsRented(createCarMaintananceRequest.getCarId()),
+				//checkIfCarIsRented(createCarMaintananceRequest.getCarId()),
 				checkIfMaintanenceEndTimeNull(createCarMaintananceRequest.getCarId())
 				);		
 		
@@ -129,13 +129,14 @@ public class CarMaintanenceManager implements CarMaintanenceService{
 
 	private Result checkIfCarIsExists(int carId) {
 		if(carService.getByCarId(carId).isSuccess()) {
-			return new ErrorResult();
+			return new SuccessResult();
 		}
-		else return new SuccessResult();
+		else return new ErrorResult(Messages.carIsNotExists);
 	}
 	
 	private Result checkIfCarIsRented(int carId) {
-		if(rentalService.isCarRented(carId)) {
+		if(rentalService.getRentalById(carId)!=null)
+		{
 			return new ErrorResult(Messages.carRented);
 		}
 		else return new SuccessResult();
