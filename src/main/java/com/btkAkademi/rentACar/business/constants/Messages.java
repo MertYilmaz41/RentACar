@@ -1,5 +1,7 @@
 package com.btkAkademi.rentACar.business.constants;
 
+import com.btkAkademi.rentACar.business.dtos.PromoCodeListDto;
+
 public class Messages {
 	//Brand
 	public static final String invalidBrandName="invalid.brand.name";
@@ -107,6 +109,9 @@ public class Messages {
 	public static final String segmentIdNotExists="segment.id.not.exists";
 	public static final String carIsInRental = "car.is.in.rental";
 	public static final String carIsNotExists="car.is.not.exists";
+	public static final String promoCodeExpired="promo.code.expired";
+	public static final String promoCodeList="promo.code.list";
+	public static final String promoCodeNotFound="promo.code.not.found";
 	
 	
 	

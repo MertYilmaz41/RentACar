@@ -13,9 +13,9 @@ import com.btkAkademi.rentACar.services.IsBankService;
 public class IsBankServiceAdapter implements BankAdapterService{
 
 	@Override
-	public Result checkIfLimitIsEnough(String cardNo, String day, String mounth, String cVV, double amount) {
+	public Result checkIfLimitIsEnough(String cardNo, String day, String year, String cVV, double amount) {
 		IsBankService isBankService = new IsBankService();
-		if( isBankService.isLimitExists(cardNo,day,mounth,cVV,amount)) {
+		if( isBankService.isLimitExists(cardNo,day,year,cVV,amount)) {
 			return new SuccessResult();
 		}else {	
 			return new ErrorResult(Messages.limitNotEnough);

@@ -79,9 +79,9 @@ public class RentalManager implements RentalService{
 
 	
 	@Override
-	public DataResult<List<RentalListDto>> getAll(int pageNo, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNo-1, pageSize);	
-		List<Rental> rentalList = this.rentalDao.findAll(pageable).getContent();
+	public DataResult<List<RentalListDto>> getAll() {
+		//Pageable pageable = PageRequest.of(pageNo-1, pageSize);	
+		List<Rental> rentalList = this.rentalDao.findAll();
 		List<RentalListDto> response = rentalList.stream()
 				.map(rental->modelMapperService.forDto()
 				.map(rental, RentalListDto.class))

@@ -44,6 +44,11 @@ public class PromoCodesController {
 		return promoCodeService.getById(id);	
 	}
 	
+	@GetMapping("getbycode/{code}")
+	public DataResult<PromoCodeListDto> findByCode(@PathVariable String code) {
+		return this.promoCodeService.getByCode(code);
+	}
+	
 	@PostMapping("add")
 	public Result add(@RequestBody @Valid CreatePromoCodeRequest createPromoCodeRequest) 
 	{

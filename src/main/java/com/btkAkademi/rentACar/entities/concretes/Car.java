@@ -39,6 +39,9 @@ public class Car {
 	@Column(name="min_age")
 	private Integer minAge;
 	
+	@Column(name = "image_url", length = 3000)
+	private String imageUrl;
+	
 	@ManyToOne
 	@JoinColumn(name = "brand_id")
 	private Brand brand;

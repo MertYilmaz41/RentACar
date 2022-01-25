@@ -28,8 +28,8 @@ public class CustomerCardDetail {
 	private String cardNo;
 	@Column(name="day")
 	private String day;
-	@Column(name="month")
-	private String month;
+	@Column(name="year")
+	private String year;
 	@Column(name="cvv")
 	private String cvv;
 	

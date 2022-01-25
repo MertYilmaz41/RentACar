@@ -22,7 +22,7 @@ import com.btkAkademi.rentACar.core.utilities.results.DataResult;
 import com.btkAkademi.rentACar.core.utilities.results.Result;
 
 @RestController
-@RequestMapping("/api/customercardetails")
+@RequestMapping("/api/customercarddetails")
 @CrossOrigin
 public class CustomerCardDetailsController {
 	private CustomerCardDetailService customerCardDetailService;

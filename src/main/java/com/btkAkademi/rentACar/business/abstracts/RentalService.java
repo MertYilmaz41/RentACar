@@ -11,7 +11,7 @@ import com.btkAkademi.rentACar.core.utilities.results.Result;
 
 
 public interface RentalService {
-	DataResult<List<RentalListDto>> getAll(int pageNo, int pageSize);
+	DataResult<List<RentalListDto>> getAll();
 	Result add(CreateRentalRequestForIndividual createRentalForIndividualRequest);	
 	Result add(CreateRentalRequestForCorporate createRentalRequestForCorporate);
 	Result update(UpdateRentalRequest updateRentalRequest);
