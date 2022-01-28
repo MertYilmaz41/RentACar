@@ -2,12 +2,9 @@ package com.btkAkademi.rentACar.business.requests.carRequests;
 
 
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,32 +16,14 @@ public class CreateCarRequest {
 
 	private int colorId;
 	private int brandId;
-	
-	@NotNull
-	@Min(0)
 	private double dailyPrice;
-	
 	private int modelYear;
-	
-	@NotNull
-	@Size(min=3,max=50)
 	private String description;
-	
-	@NotNull
-	@Min(650)
-	@Max(1900)
 	private int findexScore;
-	
-	@NotNull
-	@Min(0)
-	@Max(2500000)
 	private int kilometer;
-	
 	@Min(18)
 	private int minAge;
-	
-	private Integer segmentId;
-	
+	private int segmentId;
 	@Pattern(regexp = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]")
 	private String imageUrl;
 	

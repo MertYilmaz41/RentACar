@@ -63,10 +63,7 @@ public class CarManager implements CarService{
 	@Override
 	public Result add(CreateCarRequest createCarRequest) {
 		
-		Result result = BusinessRules.run(
-				checkIfSegmentIdExists(createCarRequest.getSegmentId())
-			
-				);
+		Result result = BusinessRules.run();
 		
 		if(result!=null) 
 		{
@@ -104,19 +101,6 @@ public class CarManager implements CarService{
 	@Override
 	public Result delete(int id) {
 		
-		
-		Result result = BusinessRules.run(
-				checkIfCarIsInRental(id)
-				
-				);
-		
-		
-		if(result!=null) 
-		{
-			return result;
-		}
-		
-		
 		if(this.carDao.existsById(id)) 
 		{
 			this.carDao.deleteById(id);
@@ -148,26 +132,25 @@ public class CarManager implements CarService{
 		{
 			return new SuccessResult();	
 		}
-		
-		return new ErrorResult(Messages.carIdNotExists);
-	}
-
-
-	@Override
-	public DataResult<List<Integer>> findAvailableCarsBySegmentId(int segmentId) {
-		if(carDao.findAvailableCarBySegment(segmentId).size()<1) {
-			return new ErrorDataResult<List<Integer>>();
-		}else return new SuccessDataResult<List<Integer>>(carDao.findAvailableCarBySegment(segmentId));
-	}
-	
-	private Result checkIfSegmentIdExists(int id) 
-	{	
-		if(segmentService.getBySegmentId(id)!=null) 
+		else
 		{
-			return new SuccessResult();
+			return new ErrorResult(Messages.carIdNotExists);
 		}
-		return new ErrorResult(Messages.segmentIdNotExists);
+		
+	
 	}
+
+
+
+	
+	//private Result checkIfSegmentIdExists(int id) 
+	//{	
+		//if(segmentService.getBySegmentId(id)!=null) 
+		//{
+			//return new SuccessResult();
+		//}
+		//return new ErrorResult(Messages.segmentIdNotExists);
+	//}
 
 	
 	private Result checkIfCarIsInRental(int carId) 

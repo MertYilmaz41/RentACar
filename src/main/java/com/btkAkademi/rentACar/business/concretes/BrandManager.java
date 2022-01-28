@@ -67,7 +67,7 @@ public class BrandManager implements BrandService {
 	@Override
 	public Result update(UpdateBrandRequest updateBrandRequest) {
 		Result result = BusinessRules.run(
-				checkIfBrandIdExist(updateBrandRequest.getBrandId()),
+				//checkIfBrandIdExist(updateBrandRequest.getBrandId()),
 				checkIfBrandNameExist(updateBrandRequest.getName())
 				
 				);

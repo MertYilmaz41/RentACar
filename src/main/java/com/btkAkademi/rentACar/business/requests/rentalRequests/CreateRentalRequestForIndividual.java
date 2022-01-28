@@ -16,7 +16,9 @@ public class CreateRentalRequestForIndividual {
 	private LocalDate rentDate;
 	private int individualCustomerId;	
 	private int carId;
-	private int promoCode;
+	//private Integer rentedKilometer;
+	//private Integer returnedKilometer;
+	//private int promoCode;
 
 
 }

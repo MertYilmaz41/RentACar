@@ -14,6 +14,7 @@ public class UpdateRentalRequest {
 	private int rentalId;
 	private LocalDate rentDate;
 	private int rentedKilometer;
+	private int returnedKilometer;
 	private int pickUpCityId;
 	private int returnCityId;
 	

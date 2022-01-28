@@ -13,5 +13,7 @@ public class CreateRentalRequestForCorporate {
 	private LocalDate rentDate;
 	private int corporateCustomerId;	
 	private int carId;
-	private int promoCode;
+	private int rentedKilometer;
+	private int returnedKilometer;
+	//private String promoCode;
 }

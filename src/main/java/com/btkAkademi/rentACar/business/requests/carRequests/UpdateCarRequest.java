@@ -14,5 +14,17 @@ public class UpdateCarRequest {
 	private double dailyPrice;
 	private int modelYear;
 	private String description;
+	private int findexScore;
+	private int kilometer;
+	private int brandId;
+	private int colorId;
+	private int minAge;
+	private Integer segmentId;
+	private String imageUrl;
+
+
+
+
+
 
 }
